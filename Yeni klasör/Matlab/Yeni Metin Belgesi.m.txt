@@ -1,0 +1,87 @@
+
+words=load('C:\Users\asus\Desktop\asus\project\text_article_bow.mat');
+words=words.features;
+tags=load('C:\Users\asus\Desktop\asus\project\meta_bow_tags.mat');
+tags=tags.features;
+taglist=fopen('C:\Users\asus\Desktop\asus\project\taglist.csv','r');
+taglist= fgetl(taglist);
+taglist = split(taglist,',');
+[num,nffdfd]=size(taglist);
+disp("level1")
+fid = fopen('C:\Users\asus\Desktop\asus\project\vocabulary_tags_sorted.txt','r');
+count = 1;
+x = zeros(1,num);
+while ~feof(fid)
+line = fgetl(fid);
+%     sp=split(line,' ')
+k = strfind(line,' ');
+line=line(1:k(length(k))-1);
+for n = 1:num
+%     disp(taglist(n));
+tfe = strcmp(line,taglist(n));
+if tfe==1
+x(n)=count;
+end
+end
+if isempty(line)
+break
+end
+count = count + 1;
+end
+fclose(fid);
+for n = 1:num
+disp(taglist(n));
+end
+% wordlist=load('/home/saidaltindis/ALL
+% FILES/PROJECTS/1RESEARCH/wordlist.txt');
+tagindexes=x;
+% tagindexes=findindex(taglist,
+% 'C:\Users\asus\Desktop\asus\project\vocabulary_tags_sorted.txt');
+% wordindexes=findindex(wordlist,
+% 'C:\Users\asus\Desktop\asus\project\vocabulary_article_sorted.txt');
+disp("level2")
+fid = fopen('C:\Users\asus\Desktop\asus\project\projectexpansion\New Folder\data\datanew3200','r');
+z=zeros(num,200);
+while ~feof(fid)
+line = fgetl(fid);
+line=split(line,',');
+name=line(1);
+found=-1;
+for n = 1:num
+if strcmp(name,taglist(n))==1
+found=n;
+break
+end
+end
+for n=2:length(line)
+fid1 = fopen('C:\Users\asus\Desktop\asus\project\vocabulary_article_sorted.txt','r');
+count = 1;
+while ~feof(fid1)
+line1 = fgetl(fid1);
+splited=split(line1,' ');
+if strcmp(line(n),splited(1))==1
+%             z(found,str2double(splited(2)))=count;
+z(found,n)=count;
+break
+end
+count=count+1;
+if isempty(line1)
+break
+end
+end
+fclose(fid1);
+%         disp(line(n))
+%         z(found,n)=line(n)
+end
+if isempty(line)
+break
+end
+count = count + 1;
+end
+% fprintf('%d lines in MAGIC help\n',count);
+fclose(fid);
+wordindexes=z;
+% AIDs_for_tags=findAIDs(tags); tags=tags(tagindexes,:);
+data=wordindexes;
+name=strcat("word_index3200n",'.mat');
+save(name,'data');
