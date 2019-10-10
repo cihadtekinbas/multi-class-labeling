@@ -1,6 +1,6 @@
 load('finalDataMatrix.mat')
 
-for n=0:0
+for n=0:6
     tf_idf_score = zeros(8,200);
     x2=power(2,n)*50;
     %     temp=data(:,1:x);

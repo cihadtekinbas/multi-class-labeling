@@ -1,5 +1,5 @@
 load('finalDataMatrix.mat')
-for n=0:0
+for n=0:6
     tf_idf_score = zeros(10,200);
     x2=power(2,n)*50;
     %     temp=data(:,1:x);
@@ -26,9 +26,7 @@ for n=0:0
 
     name=strcat(int2str(x2),'tf_idfscore.mat');
     save(name,'tf_idf_score');
-%      b=tf_idf_score;
-%      b(~b)=0.0001;
-%      tf_idf_score=b; %to get rid of zeros
+
     matrix_to_update = finalDataMatrix;
     for x = 1:10
         for y = 1:x2
