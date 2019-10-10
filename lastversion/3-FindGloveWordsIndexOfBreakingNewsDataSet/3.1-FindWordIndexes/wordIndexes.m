@@ -1,12 +1,32 @@
-taglist = fopen('/home/asus/Desktop/Classification/lastversion/3-FindGloveWordsIndexOfBreakingNewsDataSet/3.1-FindWordIndexes/taglist.csv', 'r');
+taglist = fopen('taglist.csv', 'r');
 taglist = fgetl(taglist);
 taglist = split(taglist, ',');
 [num, ~] = size(taglist);
-fid = fopen('/home/asus/Desktop/Classification/lastversion/3-FindGloveWordsIndexOfBreakingNewsDataSet/3.1-FindWordIndexes/datapnew100', 'r');
+fid = fopen('datapnew3200', 'r');
+dict = containers.Map
+
+% keys(dict)
+% values(dict)
+% dict('school')
+fid1 = fopen('vocabulary_article_sorted.txt', 'r');
+count = 1;
+while ~ feof(fid1)
+    line1 = fgetl(fid1);
+    splited = split(line1, ' ');
+    dict(char(splited(1)))=count;
+    count = count + 1;
+    if isempty(line1)
+        break
+    end
+end
+fclose(fid1);
+
+
+
 z = zeros(num, 50);
 while ~ feof(fid)
     line = fgetl(fid);
-    line = split(line, ',');
+    line = split(line, '$#$');
     name = line(1);
     found = - 1;
     for n = 1:num
@@ -15,32 +35,23 @@ while ~ feof(fid)
             break
         end
     end
+    disp(length(line))
     for n = 2:length(line)
-        fid1 = fopen('/home/asus/Desktop/Classification/lastversion/3-FindGloveWordsIndexOfBreakingNewsDataSet/3.1-FindWordIndexes/vocabulary_article_sorted.txt', 'r');
-        count = 1;
-        while ~ feof(fid1)
-            line1 = fgetl(fid1);
-            splited = split(line1, ' ');
-            if strcmp(line(n), splited(1)) == 1
-                z(found, n) = count;
-                break
-            end
-            count = count + 1;
-            if isempty(line1)
-                break
-            end
+        if isKey(dict,char(line(n))) == 1
+            z(found, n) = dict(char(line(n)));
+            
         end
-        fclose(fid1);
+        
     end
+    
     if isempty(line)
         break
     end
-    count = count + 1;
 end
 fclose(fid);
 wordindexes = z;
 data = wordindexes;
-name = strcat("word_index100", '.mat');
+name = strcat("word_index3200", '.mat');
 save(name, 'data');
 
 
