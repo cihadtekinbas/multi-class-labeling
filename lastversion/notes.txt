@@ -1,0 +1,3 @@
+narrowdataset.py-> to narrow glove data set according to categories .The cosine distance must be less than 1.
+wordsexapsion.py-> to choose words from glove minlist. -datap:to use matlab data:shape as list datad:the words with distance
+
