@@ -1,0 +1,11 @@
+Reading tag finished.
+Trie operation is done.
+Counter earn: 44901
+Counter grain: 42598
+Counter crude: 23697
+Counter trade: 3644
+Counter interest: 2114
+Trie length: 116954
+Time to create trie: 218.1015386581421
+Time to write shelve: 17.18531894683838
+
